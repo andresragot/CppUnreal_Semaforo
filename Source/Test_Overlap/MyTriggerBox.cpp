@@ -34,8 +34,8 @@ void AMyTriggerBox::BeginPlay()
 
 void AMyTriggerBox::TriggerEnter(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-    if (GEngine != nullptr)
-        GEngine->AddOnScreenDebugMessage(-1, 5, FColor::White, TEXT("Hello from Coded Trigger to ") + OtherActor->GetName());
+    // if (GEngine != nullptr)
+        // GEngine->AddOnScreenDebugMessage(-1, 5, FColor::White, TEXT("Hello from Coded Trigger to ") + OtherActor->GetName());
 
     // Calcula la dirección del actor que está entrando
     /*FVector Direction = OtherActor->GetActorLocation() - GetActorLocation();
@@ -90,7 +90,7 @@ void AMyTriggerBox::TriggerEnter(UPrimitiveComponent* OverlappedComponent, AActo
 
 void AMyTriggerBox::TriggerExit(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-    if (GEngine != nullptr)
-        GEngine->AddOnScreenDebugMessage(-1, 5, FColor::White, TEXT("Bye from Coded Trigger to ") + OtherActor->GetName());
+    // if (GEngine != nullptr)
+        // GEngine->AddOnScreenDebugMessage(-1, 5, FColor::White, TEXT("Bye from Coded Trigger to ") + OtherActor->GetName());
 
 }

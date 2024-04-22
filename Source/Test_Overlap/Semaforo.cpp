@@ -32,6 +32,8 @@ void ASemaforo::BeginPlay()
     //Estado inciial
     beaconState = BeaconState::Green;
     SetLight(true);
+
+    is_car_passing = false;
 }
 
 // Called every frame
@@ -46,6 +48,7 @@ void ASemaforo::Tick(float DeltaTime)
         if (timeWaitAux <= 0)
         {
             CarPass();
+            is_car_passing = true;
             timeWaitAux = timeWait;
         }
         // FString message = FString::Printf(TEXT("Time restante %d"), timeWaitAux);
@@ -55,7 +58,12 @@ void ASemaforo::Tick(float DeltaTime)
         timeWaitAux -= DeltaTime;
     }
 
-    if (ListPed.size() > 0 && beaconState == BeaconState::Green)
+    if ((ListPed.size() > 0 && beaconState == BeaconState::Green))
+    {
+        Switching(false);
+        PedPass();
+    }
+    else if (ListPed.size() > 0 && !is_car_passing)
     {
         Switching(false);
         PedPass();
@@ -109,6 +117,7 @@ void ASemaforo::NotifyActorBeginOverlap(AActor* OtherActor)
             // GEngine->AddOnScreenDebugMessage(-1, 5, FColor::White, TEXT("Beacon green"));
             Switching(false);
             carActor->ResumeCar();
+            is_car_passing = true;
             // carActor->ResumeCar();
         }
         else
@@ -123,7 +132,7 @@ void ASemaforo::NotifyActorBeginOverlap(AActor* OtherActor)
         {
             ListPed.push_back(pedActor);
             pedActor->Stop();
-            if (beaconState == BeaconState::Red)
+            if (beaconState == BeaconState::Red && !is_car_passing)
             {
                 pedActor->Resume();
             }
@@ -137,6 +146,7 @@ void ASemaforo::NotifyActorEndOverlap(AActor* OtherActor)
     if (carActor != NULL)
     {
         Switching(true);
+        is_car_passing = false;
         if (ListCars.size() > 0)
         {
             Switching(false);

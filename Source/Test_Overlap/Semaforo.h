@@ -51,6 +51,8 @@ protected:
     std::vector<ACar*> ListCars;
     std::vector<APedestrian*> ListPed;
 
+    bool is_car_passing = false;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
